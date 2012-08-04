@@ -21,7 +21,7 @@ function music(track)
 			source = love.audio.newSource( "media/song1.mp3", mp3)
 			love.audio.play(source)
 		end
-		if track == "1" then 
+		if track == "2" then 
 			source = love.audio.newSource( "media/song2.mp3", mp3)
 			love.audio.play(source)
 		end
