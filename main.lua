@@ -9,8 +9,11 @@ function love.load()
 	Buttion = love.graphics.newImage("media/Buttion.png")
 	Key = love.graphics.newImage("media/Key.png")
 	mode = "Start"
+	savetime = 0 -- Current OS time
+	showtext = true -- Show text or hide
 	music_toggle = "1"
 	love.audio.setVolume(1)
+	down = love.mouse.isDown("l")
 	print ("LOAD: Fonts and Reseting Variables ...Done")
 	music("1")
 
@@ -19,9 +22,9 @@ end
 
 function love.draw()
 	love.graphics.setFont(font14)
-	down = love.keyboard.isDown("f3")
+	downf3 = love.keyboard.isDown("f3")
 	downegg = love.keyboard.isDown("`")
-	if down == true then
+	if downf3 == true then
 		if downegg == true then
 			egg_console()
 			text = "on"
@@ -37,28 +40,42 @@ function love.draw()
 		love.graphics.print( "Mouse X: ".. mouse_x .. " Mouse Y: " .. mouse_y, 130, 0)
 		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
 	end
-	down = love.mouse.isDown("l")
 	if  mode == "Start"  then
 		love.graphics.setFont(font70)
 		love.graphics.print("EGO", 400, 100)
 		love.graphics.setFont(font20)
-		love.graphics.print("Start , Press Enter", 350, 330)
 		love.graphics.print("Settings , Press T", 350, 365)		
 		love.graphics.print("Help , Press H", 385, 400)
+		love.graphics.print("Start , Press Enter", 350, 330)
+		
+		--Flicker Timer
+	--	if savetime == 0 or savetime + 1 <= os.time() then
+	--		savetime = os.time()
+		
+	--		if showtext == true then
+	--			love.graphics.setColor(204, 102, 0)
+	--			love.graphics.print("Start , Press Enter", 350, 330)
+	--			print("Orange")
+	--		else 
+	--			love.graphics.setColor(255, 255, 255)
+	--			love.graphics.print("Start , Press Enter", 350, 330)
+	--			print("White")
+	--		end 
+	--	
+	--		love.graphics.setColor(255, 255, 255)
+	--		showtext = not showtext
+	--		print(showtext)
+	--	end
+	
 	elseif mode == NULL then
 		print ("ERROR: Mode Not Set!")
 	end
 	
 	--Key Bindings
-
+	
 	function love.keypressed(key)
-		--if mouse_x == 348 < 660 then
-		--	print ("X LOCKED!")
-		--end
-		--if mouse_y == 344 < 370 then
-		--	print ("Y LOCKED!")
-		--end
-		if key == "return" or down == true and mouse_x >= 348 <= 660 and mouse_y >= 344	<= 370  then
+
+		if key == "return" then
 			mode = "Game"
 			print ("GAME: Mode Changed to Game")
 			
@@ -75,14 +92,24 @@ function love.draw()
 			print ("GAME: Quiting")	
 		end
 	end
+	
 
-
+		
+	
+	--Mouse
+	mouse_x = love.mouse.getX()
+	mouse_y = love.mouse.getY()	
+	if love.mouse.isDown("l") and mouse_x >= 347 and mouse_x <= 658 and mouse_y >= 344 and mouse_y  <= 360 then
+		print(mouse_x)
+		print(mouse_y)
+	end
 
 	--Mode Setup Code
 	if mode == "Game" then
-		love.graphics.clear( )
+		love.graphics.clear()
 		startgame()	
 	end
+	
 	if mode == "Settings" then
 		love.graphics.clear( )
 		love.graphics.setFont(font30)
