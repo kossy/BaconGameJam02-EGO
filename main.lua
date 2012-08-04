@@ -1,5 +1,5 @@
 function love.load()
-	font = love.graphics.newFont("Fipps.otf", 16)
+	font = love.graphics.newFont("Fipps.otf", 14)
 end 
 
 
