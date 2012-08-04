@@ -12,3 +12,11 @@ function back()
 		end
 	end
 end 
+function music(track)
+	if music_toggle == "1" then
+		if track == "1" then 
+			source = love.audio.newSource( "media/song1.mp3", mp3)
+			love.audio.play(source)
+		end
+	end
+end

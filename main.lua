@@ -9,7 +9,10 @@ function love.load()
 	Buttion = love.graphics.newImage("media/Buttion.png")
 	Key = love.graphics.newImage("media/Key.png")
 	mode = "Start"
+	music_toggle = "1"
+	love.audio.setVolume(1)
 	print ("LOAD: Fonts and Reseting Variables ...Done")
+	music("1")
 end 
 
 
@@ -58,8 +61,7 @@ function love.draw()
 
 		elseif key == "escape" then
 			love.event.push("quit")
-			print ("GAME: Quiting")
-			
+			print ("GAME: Quiting")	
 		end
 	end
 
@@ -74,7 +76,44 @@ function love.draw()
 		love.graphics.clear( )
 		love.graphics.setFont(font30)
 		love.graphics.print("Settings", 700, 5)
-		back()
+		love.graphics.setFont(font20)
+		if music_toggle == "0" then
+			love.graphics.print("Un-Mute Music , Press M", 43, 74)
+		else
+			love.graphics.print("Mute Music , Press M", 43, 74)
+		end
+		love.graphics.print("Music Volume " ..love.audio.getVolume().. " Press + -", 43, 111)
+		love.graphics.setFont(font20)
+		love.graphics.print("Back (BackSpace)",  10, 5)
+		
+		function love.keypressed(key)
+			if key == "m"  and music_toggle == "1" then
+				music_toggle = "0"
+				love.audio.stop()
+				key = "0"
+				print ("GAME: Music Muted")	
+			end
+			if key == "m"  and music_toggle == "0" then
+				music_toggle = "1"
+				music("1")
+				key = "0"
+				print ("GAME: Music Un-Muted")	
+			end
+			if key == "backspace" then
+				mode = "Start"
+				print ("GAME: Mode Reset to Start")
+			end
+			if key == "-" then
+				volume = love.audio.getVolume()
+				love.audio.setVolume(volume - 0.1)
+				print ("GAME: Game Volume Decreased")
+			end
+			if key == "+" then
+				volume = love.audio.getVolume()
+				love.audio.setVolume(volume + 0.1)
+				print ("GAME: Game Volume Increased")
+			end
+		end
 	end
 	
 	if mode == "Help" then
