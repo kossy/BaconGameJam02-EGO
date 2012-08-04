@@ -1,32 +1,72 @@
 function startgame()
 
+	player = love.graphics.newImage("media/player.png")
 	px = 1025/2
 	py = 600/2
 	pspeed = 100
+	playerrot = 0
+	
+	ymax = 500
+	ymin = 100
+	xmax = 920
+	xmin = 120
 	function love.update(dt)
-		if love.keyboard.isDown("left") then
-		  if px<120 then
-		  else
-			px = px - (pspeed *dt)
-		  end
-	   elseif love.keyboard.isDown("right") then
-	      if px>920 then
-		  else
-			px = px + (pspeed *dt)
-		  end
-	   end
+		if love.keyboard.isDown("up") and love.keyboard.isDown("left") then
+			if py < ymin or px < xmin then
+			else
+				playerrot = -0.785398163
+				py = py - (pspeed *dt)
+				px = px - (pspeed *dt)
+			end
+		elseif love.keyboard.isDown("up") and love.keyboard.isDown("right") then
+			if py < ymin or px > xmax then
+			else
+				playerrot = 0.785398163
+				py = py - (pspeed *dt)
+				px = px + (pspeed *dt)
+			end
+		elseif love.keyboard.isDown("down") and love.keyboard.isDown("left") then
+			if py > ymax or px < xmin then
+			else
+				playerrot = -2.35619449
+				py = py + (pspeed *dt)
+				px = px - (pspeed *dt)
+			end
+		elseif love.keyboard.isDown("down") and love.keyboard.isDown("right") then
+			if py > ymax or px > xmax then
+			else
+				playerrot = 2.35619449
+				py = py + (pspeed *dt)
+				px = px + (pspeed *dt)
+			end
+		else
+			if love.keyboard.isDown("left") then
+			  if px<xmin then
+			  else
+				playerrot =(-1.57079633)
+				px = px - (pspeed *dt)
+			  end
+		   elseif love.keyboard.isDown("right") then
+			  if px>xmax then
+			  else
+				playerrot =(1.57079633)
+				px = px + (pspeed *dt)
+			  end
 
-	   if love.keyboard.isDown("up") then
-		  if py < 100 then
-		  else
-			py = py - (pspeed *dt)
-		  end
-	   elseif love.keyboard.isDown("down") then
-		  if py>500 then
-		  else
-			py = py + (pspeed *dt)
-		  end
-	   end
+		   elseif love.keyboard.isDown("up") then
+			  if py < ymin then
+			  else
+				playerrot =(0)
+				py = py - (pspeed *dt)
+			  end
+		   elseif love.keyboard.isDown("down") then
+			  if py>ymax then
+			  else
+				playerrot =(3.14159265)
+				py = py + (pspeed *dt)
+			  end
+		   end
+		end
 	end
 	function love.draw()
 	  love.graphics.setColor( 0, 0, 0, 255)
@@ -39,7 +79,8 @@ function startgame()
 	  love.graphics.setColor( 125, 125, 125, 255)
 	  love.graphics.rectangle("fill", 120, 100, 800, 400)
 	  
-	  love.graphics.draw(player, px, py, 0, .25)
+	  love.graphics.draw(player, px, py, playerrot, .33, .33, 32, 32)
+	  
 	  
 	end
 end
