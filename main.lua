@@ -99,11 +99,11 @@ function love.draw()
 	--Mouse Boxes
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()	
-	if love.mouse.isDown("l") and mouse_x >= 347 and mouse_x <= 658 and mouse_y >= 344 and mouse_y  <= 360 then
+	if love.mouse.isDown("l") and mouse_x >= 340 and mouse_x <= 667 and mouse_y >= 344 and mouse_y  <= 372 then
 		print("MENU: Start Buttion Pressed")
 		mode = "Game"
 	end
-	if love.mouse.isDown("l") and mouse_x >= 405 and mouse_x <= 611 and mouse_y >= 344 and mouse_y  <= 408 then
+	if love.mouse.isDown("l") and mouse_x >= 405 and mouse_x <= 611 and mouse_y >= 378 and mouse_y  <= 407 then
 		print("MENU: Help Buttion Pressed")
 		mode = "Help"
 	end
