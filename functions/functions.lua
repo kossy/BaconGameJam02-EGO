@@ -19,10 +19,12 @@ function music(track)
 	if music_toggle == "1" then
 		if track == "1" then 
 			source = love.audio.newSource( "media/song1.mp3", mp3)
+			source:setLooping(true)
 			love.audio.play(source)
 		end
 		if track == "2" then 
 			source = love.audio.newSource( "media/song2.mp3", mp3)
+			source:setLooping(true)
 			love.audio.play(source)
 		end
 	end
