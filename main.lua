@@ -15,7 +15,7 @@ function love.load()
 	love.audio.setVolume(1)
 	down = love.mouse.isDown("l")
 	print ("LOAD: Fonts and Reseting Variables ...Done")
-	music("1")
+	music("2")
 
 end 
 
