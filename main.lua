@@ -1,110 +1,88 @@
-local map -- stores tiledata
-local mapWidth, mapHeight -- width and height in tiles
-
-local mapX, mapY -- view x,y in tiles. can be a fractional value like 3.25.
-
-local tilesDisplayWidth, tilesDisplayHeight -- number of tiles to show
-local zoomX, zoomY
-
-local tilesetImage
-local tileSize -- size of tiles in pixels
-local tileQuads = {} -- parts of the tileset used for different tiles
-local tilesetSprite
-
+require "functions/functions"
+require "game"
 function love.load()
-  setupMap()
-  setupMapView()
-  setupTileset()
-  --love.graphics.setFont(12)
-end
+	love.graphics.setBackgroundColor( 204, 102, 0)
+	font14 = love.graphics.newFont("media/Fipps.otf", 14)	
+	font20 = love.graphics.newFont("media/Fipps.otf", 20)
+	font30 = love.graphics.newFont("media/Fipps.otf", 30)
+	font50 = love.graphics.newFont("media/Fipps.otf", 50)
+	Buttion = love.graphics.newImage("media/Buttion.png")
+	Key = love.graphics.newImage("media/Key.png")
+	mode = "Start"
+	print ("LOAD: Fonts and Reseting Variables ...Done")
+end 
 
-function setupMap()
-  mapWidth = 60
-  mapHeight = 40
- 
-  map = {}
-  for x=1,mapWidth do
-    map[x] = {}
-    for y=1,mapHeight do
-      map[x][y] = math.random(0,3)
-    end
-  end
-end
-
-function setupMapView()
-  mapX = 1
-  mapY = 1
-  tilesDisplayWidth = 26
-  tilesDisplayHeight = 20
- 
-  zoomX = 1
-  zoomY = 1
-end
-
-function setupTileset()
-  tilesetImage = love.graphics.newImage( "media/test.png" )
-  tilesetImage:setFilter("nearest", "linear") -- this "linear filter" removes some artifacts if we were to scale the tiles
-  tileSize = 32
-  tileSize = 32
- 
-  -- grass
-  tileQuads[0] = love.graphics.newQuad(0 * tileSize, 20 * tileSize, tileSize, tileSize,
-    tilesetImage:getWidth(), tilesetImage:getHeight())
-  -- kitchen floor tile
-  tileQuads[1] = love.graphics.newQuad(2 * tileSize, 0 * tileSize, tileSize, tileSize,
-    tilesetImage:getWidth(), tilesetImage:getHeight())
-  -- parquet flooring
-  tileQuads[2] = love.graphics.newQuad(4 * tileSize, 0 * tileSize, tileSize, tileSize,
-    tilesetImage:getWidth(), tilesetImage:getHeight())
-  -- middle of red carpet
-  tileQuads[3] = love.graphics.newQuad(3 * tileSize, 9 * tileSize, tileSize, tileSize,
-    tilesetImage:getWidth(), tilesetImage:getHeight())
- 
-  tilesetBatch = love.graphics.newSpriteBatch(tilesetImage, tilesDisplayWidth * tilesDisplayHeight)
- 
-  updateTilesetBatch()
-end
-
-function updateTilesetBatch()
-  tilesetBatch:clear()
-  for x=0, tilesDisplayWidth-1 do
-    for y=0, tilesDisplayHeight-1 do
-      tilesetBatch:addq(tileQuads[map[x+math.floor(mapX)][y+math.floor(mapY)]],
-        x*tileSize, y*tileSize)
-    end
-  end
-end
-
--- central function for moving the map
-function moveMap(dx, dy)
-  oldMapX = mapX
-  oldMapY = mapY
-  mapX = math.max(math.min(mapX + dx, mapWidth - tilesDisplayWidth), 1)
-  mapY = math.max(math.min(mapY + dy, mapHeight - tilesDisplayHeight), 1)
-  -- only update if we actually moved
-  if math.floor(mapX) ~= math.floor(oldMapX) or math.floor(mapY) ~= math.floor(oldMapY) then
-    updateTilesetBatch()
-  end
-end
-
-function love.update(dt)
-  if love.keyboard.isDown("up")  then
-    moveMap(0, -0.2 * tileSize * dt)
-  end
-  if love.keyboard.isDown("down")  then
-    moveMap(0, 0.2 * tileSize * dt)
-  end
-  if love.keyboard.isDown("left")  then
-    moveMap(-0.2 * tileSize * dt, 0)
-  end
-  if love.keyboard.isDown("right")  then
-    moveMap(0.2 * tileSize * dt, 0)
-  end
-end
 
 function love.draw()
-  love.graphics.draw(tilesetBatch,
-    math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize),
-    0, zoomX, zoomY)
-  love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
+	love.graphics.setFont(font14)
+	down = love.keyboard.isDown("f3")
+	if down == true then
+		Version()
+		mouse_x = love.mouse.getX()
+		mouse_y = love.mouse.getY()
+		love.graphics.print( "Mouse X: ".. mouse_x .. " Mouse Y: " .. mouse_y, 130, 0)
+		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
+	end
+	down = love.mouse.isDown("l")
+	if  mode == "Start"  then
+		love.graphics.setFont(font50)
+		love.graphics.print("EGO", 430, 100)
+		love.graphics.setFont(font20)
+		love.graphics.print("Start , Press Enter", 350, 330)
+		love.graphics.print("Settings , Press T", 350, 365)		
+		love.graphics.print("Help , Press H", 385, 400)
+	elseif mode == NULL then
+		print ("ERROR: Mode Not Set!")
+	end
+	
+	--Key Bindings
+
+	function love.keypressed(key)
+		--if mouse_x == 348 < 660 then
+		--	print ("X LOCKED!")
+		--end
+		--if mouse_y == 344 < 370 then
+		--	print ("Y LOCKED!")
+		--end
+		if key == "return" or down == true and mouse_x >= 348 <= 660 and mouse_y >= 344	<= 370  then
+			mode = "Game"
+			print ("GAME: Mode Changed to Game")
+			
+		elseif key == "t" then
+			mode = "Settings"
+			print ("GAME: Mode Changed to Settings")
+
+		elseif key == "h" then
+			mode = "Help"
+			print ("GAME: Mode Changed to Help")
+
+		elseif key == "escape" then
+			love.event.push("quit")
+			print ("GAME: Quiting")
+			
+		end
+	end
+
+
+
+	--Mode Setup Code
+	if mode == "Game" then
+		love.graphics.clear( )
+		startgame()	
+	end
+	if mode == "Settings" then
+		love.graphics.clear( )
+		love.graphics.setFont(font30)
+		love.graphics.print("Settings", 700, 5)
+		back()
+	end
+	
+	if mode == "Help" then
+		love.graphics.clear( )
+		love.graphics.setFont(font30)
+		love.graphics.print("Help", 800, 5)
+		love.graphics.setFont(font20)
+		back()
+	end
+	
 end
