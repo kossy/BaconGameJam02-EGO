@@ -5,7 +5,8 @@ function love.conf(t)
     t.identity = nil            -- The name of the save directory (string)
     t.version = "0.8.0"
     t.screen.width = 1024
-    t.screen.height = 768
+    t.screen.height = 600
 	t.screen.fullscreen = false
-	 t.console = true
+	t.console = true
+	t.screen.vsync = true 
 end
