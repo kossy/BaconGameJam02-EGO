@@ -20,3 +20,12 @@ function music(track)
 		end
 	end
 end
+function save(slot)
+
+end
+function egg_console() 
+fontc14 = love.graphics.newFont("media/console.ttf", 14)
+love.graphics.clear( )
+love.graphics.setBackgroundColor( 0, 0, 0)
+love.graphics.setColor(1, 255, 0)
+end

@@ -13,13 +13,24 @@ function love.load()
 	love.audio.setVolume(1)
 	print ("LOAD: Fonts and Reseting Variables ...Done")
 	music("1")
+
 end 
 
 
 function love.draw()
 	love.graphics.setFont(font14)
 	down = love.keyboard.isDown("f3")
+	downegg = love.keyboard.isDown("`")
 	if down == true then
+		if downegg == true then
+			egg_console()
+			text = "on"
+		end
+		if text == "on" then
+			love.graphics.print("Microsoft Windows [Version 6.1.7600]", 15, 474)
+            love.graphics.print("Copyright <c> 2012 Microsoft Corporation. All rights reserved.", 15 , 510)
+            love.graphics.print("C:\Users\EGO", 15, 550)
+		end
 		Version()
 		mouse_x = love.mouse.getX()
 		mouse_y = love.mouse.getY()
@@ -82,6 +93,7 @@ function love.draw()
 		else
 			love.graphics.print("Mute Music , Press M", 43, 74)
 		end
+		love.graphics.print("Toggle Fullscreen , Press F", 43, 150)
 		love.graphics.print("Music Volume " ..love.audio.getVolume().. " Press + -", 43, 111)
 		love.graphics.setFont(font20)
 		love.graphics.print("Back (BackSpace)",  10, 5)
@@ -113,7 +125,11 @@ function love.draw()
 				love.audio.setVolume(volume + 0.1)
 				print ("GAME: Game Volume Increased")
 			end
-		end
+			if key == "f" then
+				love.graphics.toggleFullscreen( )
+				print ("GAME: FullScreen Toggled")
+			end
+		end	
 	end
 	
 	if mode == "Help" then
