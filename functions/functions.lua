@@ -2,16 +2,19 @@ function Version()
 	love.graphics.print("Ver 0.10" , 10, 0)
 	love.graphics.print("Made by Nonameghost & Kossy" , 655, 565)
 end
+
 function back()
 	love.graphics.setFont(font20)
-	love.graphics.print("Back (BackSpace)",  10, 5)
-	function love.keypressed(key)
-		if key == "backspace" then
-			mode = "Start"
-			print ("GAME: Mode Reset to Start")
-		end
+	love.graphics.print("Back",  10, 5)
+	
+	if love.mouse.isDown("l") and mouse_x >= 8 and mouse_x <= 90 and mouse_y >= 19 and mouse_y  <= 46 then
+		mode = "Start"
 	end
+	
+	print ("GAME: Mode Reset to Start")
+	
 end 
+
 function music(track)
 	if music_toggle == "1" then
 		if track == "1" then 
@@ -20,9 +23,11 @@ function music(track)
 		end
 	end
 end
+
 function save(slot)
 
 end
+
 function egg_console() 
 fontc14 = love.graphics.newFont("media/console.ttf", 14)
 love.graphics.clear( )

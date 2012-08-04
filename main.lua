@@ -44,9 +44,9 @@ function love.draw()
 		love.graphics.setFont(font70)
 		love.graphics.print("EGO", 400, 100)
 		love.graphics.setFont(font20)
-		love.graphics.print("Settings , Press T", 350, 365)		
-		love.graphics.print("Help , Press H", 385, 400)
-		love.graphics.print("Start , Press Enter", 350, 330)
+		love.graphics.print("Settings", 439, 400)		
+		love.graphics.print("Instructions", 407, 365)
+		love.graphics.print("Insert Coin to Start", 346, 330)
 		
 		--Flicker Timer
 	--	if savetime == 0 or savetime + 1 <= os.time() then
@@ -75,11 +75,11 @@ function love.draw()
 	
 	function love.keypressed(key)
 
-		if key == "return" then
-			mode = "Game"
-			print ("GAME: Mode Changed to Game")
+	--	if key == "return" then
+	--		mode = "Game"
+	--		print ("GAME: Mode Changed to Game")
 			
-		elseif key == "t" then
+		if key == "t" then
 			mode = "Settings"
 			print ("GAME: Mode Changed to Settings")
 
@@ -96,14 +96,22 @@ function love.draw()
 
 		
 	
-	--Mouse
+	--Mouse Boxes
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()	
 	if love.mouse.isDown("l") and mouse_x >= 347 and mouse_x <= 658 and mouse_y >= 344 and mouse_y  <= 360 then
-		print(mouse_x)
-		print(mouse_y)
+		print("MENU: Start Buttion Pressed")
+		mode = "Game"
 	end
-
+	if love.mouse.isDown("l") and mouse_x >= 405 and mouse_x <= 611 and mouse_y >= 344 and mouse_y  <= 408 then
+		print("MENU: Help Buttion Pressed")
+		mode = "Help"
+	end
+	if love.mouse.isDown("l") and mouse_x >= 436 and mouse_x <= 580 and mouse_y >= 410 and mouse_y  <= 443 then
+		print("MENU: Settings Buttion Pressed")
+		mode = "Settings"
+	end
+	
 	--Mode Setup Code
 	if mode == "Game" then
 		love.graphics.clear()
@@ -116,14 +124,37 @@ function love.draw()
 		love.graphics.print("Settings", 700, 5)
 		love.graphics.setFont(font20)
 		if music_toggle == "0" then
-			love.graphics.print("Un-Mute Music , Press M", 43, 74)
+			love.graphics.print("Un-Mute Music", 43, 74)
 		else
-			love.graphics.print("Mute Music , Press M", 43, 74)
+			love.graphics.print("Mute Music", 43, 74)
 		end
 		love.graphics.print("Toggle Fullscreen , Press F", 43, 150)
 		love.graphics.print("Music Volume " ..love.audio.getVolume().. " Press + -", 43, 111)
 		love.graphics.setFont(font20)
-		love.graphics.print("Back (BackSpace)",  10, 5)
+		love.graphics.print("Back",  10, 5)
+		
+		mouse_down = love.mouse.isDown("l")
+		
+		if love.mouse.isDown("l") and mouse_x >= 8 and mouse_x <= 90 and mouse_y >= 19 and mouse_y  <= 46 then
+			mode = "Start"
+			print ("GAME: Mode Reset to Start")
+		end
+		if mouse_down == true and mouse_x >= 42 and mouse_x <= 227 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "1" then
+				music_toggle = "0"
+				love.audio.stop()
+				mouse_down = NULL
+				print ("GAME: Music Muted")	
+	
+		end
+		if mouse_down == true and mouse_x >= 42 and mouse_x <= 282 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "0" then
+				music_toggle = "1"
+				music("1")
+				mouse_down = NULL
+				print ("GAME: Music UN-Muted")	
+	
+		end
+		
+		mouse_down = love.mouse.isDown("l")
 		
 		function love.keypressed(key)
 			if key == "m"  and music_toggle == "1" then
