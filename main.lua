@@ -1,4 +1,5 @@
 require "functions/functions"
+require "game"
 function love.load()
 	font14 = love.graphics.newFont("Fipps.otf", 14)	
 	font20 = love.graphics.newFont("Fipps.otf", 20)
@@ -22,9 +23,11 @@ function love.draw()
 	function love.keypressed(key)
 		if key == "return" then
 			mode = "Game"
-			love.graphics.print("Game On!", 650, 130)
 		end
 	end
-		
-
+	
+	if mode == "Game" then
+		test()
+	end
+	
 end
