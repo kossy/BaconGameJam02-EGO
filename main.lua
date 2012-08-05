@@ -109,30 +109,21 @@ function love.draw()
 	--		mode = "Game"
 	--		print ("GAME: Mode Changed to Game")
 			
-		if key == "t" then
-			mode = "Settings"
-			print ("GAME: Mode Changed to Settings")
-			end
-		elseif key == "-" then
-			volume = love.audio.getVolume()
-			love.audio.setVolume(volume - 0.1)
-			print ("GAME: Game Volume Decreased")
-			end
-	    elseif key == "+" then
-			volume = love.audio.getVolume()
-			love.audio.setVolume(volume + 0.1)
-			print ("GAME: Game Volume Increased")
-			end
+	--	if key == "s" then
+	--		mode = "Settings"
+	--		print ("GAME: Mode Changed to Settings")
+	--		end
 			
-		elseif key == "h" then
-			mode = "Help"
-			print ("GAME: Mode Changed to Help")
-
-		elseif key == "escape" then
+	--	elseif key == "h" then
+	--		mode = "Help"
+	--		print ("GAME: Mode Changed to Help")
+	--		end
+			
+		if key == "escape" then
 			love.event.push("quit")
 			print ("GAME: Quiting")	
 		end
-	end		
+    end		
 	
 	-- Setting Mouse Coords Variable
 	mouse_x = love.mouse.getX()
