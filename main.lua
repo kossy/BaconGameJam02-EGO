@@ -1,29 +1,43 @@
+-- Loading Required Files
 require "functions/functions"
 require "game"
+
 function love.load()
-	love.graphics.setBackgroundColor( 0, 0, 0)
-	love.graphics.setColor(1, 255, 0)
+	
+	--Setting up Graphics
+	love.graphics.setBackgroundColor( 0, 0, 0)	-- Setting Bg Colour to black	
+	love.graphics.setColor(1, 255, 0)	
+	
+	--Setting up fonts and sizes
 	font14 = love.graphics.newFont("media/Fipps.otf", 14)	
 	font20 = love.graphics.newFont("media/Fipps.otf", 20)
 	font30 = love.graphics.newFont("media/Fipps.otf", 30)
 	font70 = love.graphics.newFont("media/Fipps.otf", 70)
+	
+	-- Assigning Varibles to Media
 	Buttion = love.graphics.newImage("media/Buttion.png")
 	Key = love.graphics.newImage("media/Key.png")
 	scanlines = love.graphics.newImage("media/scanlines.png")
+	
+	-- Assigning Default Values for Variables
 	mode = "Start"
 	savetime = 0 -- Current OS time
 	showtext = true -- Show text or hide
 	music_toggle = "1"
-	love.audio.setVolume(1)
+	love.audio.setVolume(0.5) 
 	down = love.mouse.isDown("l")
-	print ("LOAD: Fonts and Reseting Variables ...Done")
-	music("2")
+	print ("LOAD: Fonts and Reseting Variables ...Done") --Showing message that everythings been loaded 
+	music("2") -- Plays Track2 on loop
 
 end 
 
 
 function love.draw()
+	
+	--Setting up Font Size
 	love.graphics.setFont(font14)
+	
+	-- F3 Enables a dev view
 	downf3 = love.keyboard.isDown("f3")
 	downegg = love.keyboard.isDown("`")
 	if downf3 == true then
@@ -41,22 +55,30 @@ function love.draw()
 		love.graphics.print( "Mouse X: ".. mouse_x .. " Mouse Y: " .. mouse_y, 130, 0)
 		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
 	end
+	
+		-- Setting Up Menu Graphics
 	if  mode == "Start"  then
 		love.graphics.rectangle("fill", 316, 70, 371, 435) 
 		love.graphics.setColor(0, 0, 0)
 		love.graphics.rectangle("fill", 321, 75, 361, 425) 
 		love.graphics.setColor(1, 255, 0)
+		
+		-- Drawing Title
 		love.graphics.setFont(font70)
 		love.graphics.print("EGO", 400, 100)
+		
+		-- Drawing Menu Options
 		love.graphics.setFont(font20)
 		love.graphics.print("Settings", 439, 400)		
 		love.graphics.print("Instructions", 407, 365)
 		love.graphics.print("Insert Coin to Start", 346, 330)
+		
+		-- Adding Game Verson and Menu Effects
 		love.graphics.setFont(font14)
 		Version()
 		love.graphics.draw(scanlines, 0, 0)
 		
-		--Flicker Timer
+	--  Flicker Timer
 	--	if savetime == 0 or savetime + 1 <= os.time() then
 	--		savetime = os.time()
 		
@@ -76,10 +98,10 @@ function love.draw()
 	--	end
 	
 	elseif mode == NULL then
-		print ("ERROR: Mode Not Set!")
+		print ("ERROR: Mode Not Set!") --Showing message in console that there is no mode set
 	end
 	
-	--Key Bindings
+	-- Setting Key Bindings (Mainly for users with no mouse)
 	
 	function love.keypressed(key)
 
@@ -99,22 +121,26 @@ function love.draw()
 			love.event.push("quit")
 			print ("GAME: Quiting")	
 		end
-	end
+	end		
 	
-
-		
-	
-	--Mouse Boxes
+	-- Setting Mouse Coords Variable
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()	
+	
+	-- Setting Up Mouse Click Boxes
+	-- Start Buttion
 	if love.mouse.isDown("l") and mouse_x >= 340 and mouse_x <= 667 and mouse_y >= 344 and mouse_y  <= 372 then
 		print("MENU: Start Buttion Pressed")
 		mode = "Game"
 	end
+	
+	-- Help Buttion
 	if love.mouse.isDown("l") and mouse_x >= 405 and mouse_x <= 611 and mouse_y >= 378 and mouse_y  <= 407 then
-		--print("MENU: Help Buttion Pressed")
+		print("MENU: Help Buttion Pressed")
 		mode = "Help"
 	end
+	
+	-- Settings Buttion
 	if love.mouse.isDown("l") and mouse_x >= 436 and mouse_x <= 580 and mouse_y >= 410 and mouse_y  <= 443 then
 		print("MENU: Settings Buttion Pressed")
 		mode = "Settings"
@@ -126,6 +152,7 @@ function love.draw()
 		startgame()	
 	end
 	
+	--Mode Settings Code
 	if mode == "Settings" then
 		love.graphics.clear( )
 		love.graphics.setFont(font30)
@@ -141,12 +168,16 @@ function love.draw()
 		love.graphics.setFont(font20)
 		love.graphics.print("Back",  10, 5)
 		
+		
+		--Setting Settings Mouse Click Boxes
+		
 		mouse_down = love.mouse.isDown("l")
 		
 		if love.mouse.isDown("l") and mouse_x >= 8 and mouse_x <= 90 and mouse_y >= 19 and mouse_y  <= 46 then
 			mode = "Start"
 			print ("GAME: Mode Reset to Start")
 		end
+		
 		if mouse_down == true and mouse_x >= 42 and mouse_x <= 227 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "1" then
 				music_toggle = "0"
 				love.audio.stop()
@@ -154,6 +185,7 @@ function love.draw()
 				print ("GAME: Music Muted")	
 	
 		end
+		
 		if mouse_down == true and mouse_x >= 42 and mouse_x <= 282 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "0" then
 				music_toggle = "1"
 				music("1")
@@ -205,5 +237,4 @@ function love.draw()
 		love.graphics.setFont(font20)
 		back()
 	end
-	
 end

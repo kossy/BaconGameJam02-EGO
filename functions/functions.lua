@@ -1,5 +1,5 @@
 function Version()
-	love.graphics.print("Ver 0.10" , 10, 0)
+	love.graphics.print("Ver 0.27" , 10, 0)
 	love.graphics.print("Made by Nonameghost & Kossy" , 655, 565)
 end
 
