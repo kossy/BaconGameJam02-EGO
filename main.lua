@@ -1,13 +1,15 @@
 require "functions/functions"
 require "game"
 function love.load()
-	love.graphics.setBackgroundColor( 204, 102, 0)
+	love.graphics.setBackgroundColor( 0, 0, 0)
+	love.graphics.setColor(1, 255, 0)
 	font14 = love.graphics.newFont("media/Fipps.otf", 14)	
 	font20 = love.graphics.newFont("media/Fipps.otf", 20)
 	font30 = love.graphics.newFont("media/Fipps.otf", 30)
 	font70 = love.graphics.newFont("media/Fipps.otf", 70)
 	Buttion = love.graphics.newImage("media/Buttion.png")
 	Key = love.graphics.newImage("media/Key.png")
+	scanlines = love.graphics.newImage("media/scanlines.png")
 	mode = "Start"
 	savetime = 0 -- Current OS time
 	showtext = true -- Show text or hide
@@ -34,19 +36,25 @@ function love.draw()
             love.graphics.print("Copyright <c> 2012 Microsoft Corporation. All rights reserved.", 15 , 510)
             love.graphics.print("C:\Users\EGO", 15, 550)
 		end
-		Version()
 		mouse_x = love.mouse.getX()
 		mouse_y = love.mouse.getY()
 		love.graphics.print( "Mouse X: ".. mouse_x .. " Mouse Y: " .. mouse_y, 130, 0)
 		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
 	end
 	if  mode == "Start"  then
+		love.graphics.rectangle("fill", 316, 70, 371, 435) 
+		love.graphics.setColor(0, 0, 0)
+		love.graphics.rectangle("fill", 321, 75, 361, 425) 
+		love.graphics.setColor(1, 255, 0)
 		love.graphics.setFont(font70)
 		love.graphics.print("EGO", 400, 100)
 		love.graphics.setFont(font20)
 		love.graphics.print("Settings", 439, 400)		
 		love.graphics.print("Instructions", 407, 365)
 		love.graphics.print("Insert Coin to Start", 346, 330)
+		love.graphics.setFont(font14)
+		Version()
+		love.graphics.draw(scanlines, 0, 0)
 		
 		--Flicker Timer
 	--	if savetime == 0 or savetime + 1 <= os.time() then
@@ -104,7 +112,7 @@ function love.draw()
 		mode = "Game"
 	end
 	if love.mouse.isDown("l") and mouse_x >= 405 and mouse_x <= 611 and mouse_y >= 378 and mouse_y  <= 407 then
-		print("MENU: Help Buttion Pressed")
+		--print("MENU: Help Buttion Pressed")
 		mode = "Help"
 	end
 	if love.mouse.isDown("l") and mouse_x >= 436 and mouse_x <= 580 and mouse_y >= 410 and mouse_y  <= 443 then

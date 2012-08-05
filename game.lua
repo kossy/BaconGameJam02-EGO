@@ -1,3 +1,6 @@
+require "person"
+require "middleclass/middleclass"
+
 function startgame()
 
 	player = love.graphics.newImage("media/player.png")
@@ -6,10 +9,18 @@ function startgame()
 	pspeed = 100
 	playerrot = 0
 	
-	ymax = 500
+	ymax = 490
 	ymin = 100
-	xmax = 920
+	xmax = 910
 	xmin = 120
+	
+	spymax = 450
+	spymin = 150
+	spxmax = 870
+	spxmin = 150
+	
+	bodies = 0
+	
 	function love.update(dt)
 		if love.keyboard.isDown("up") and love.keyboard.isDown("left") then
 			if py < ymin or px < xmin then
@@ -69,8 +80,8 @@ function startgame()
 		end
 	end
 	function love.draw()
-	  love.graphics.setColor( 0, 0, 0, 255)
-	  love.graphics.rectangle("fill", 0, 0, 1025, 600)
+	  --love.graphics.setColor( 0, 0, 0, 255)
+	  --love.graphics.rectangle("fill", 0, 0, 1025, 600)
 	  love.graphics.setColor( 255, 255, 255, 255)
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
 	  love.graphics.print("EGO", 1025/2,0)
@@ -79,8 +90,12 @@ function startgame()
 	  love.graphics.setColor( 125, 125, 125, 255)
 	  love.graphics.rectangle("fill", 120, 100, 800, 400)
 	  
+	  spawnCrowd(bodies)
+	  
 	  love.graphics.draw(player, px, py, playerrot, .33, .33, 32, 32)
+
 	  
 	  
 	end
+
 end
