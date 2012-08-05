@@ -21,6 +21,9 @@ function startgame()
 	
 	bodies = 0
 	
+	mouse_x = love.mouse.getX()
+	mouse_y = love.mouse.getY()
+	
 	function love.update(dt)
 		if love.keyboard.isDown("up") and love.keyboard.isDown("left") then
 			if py < ymin or px < xmin then
@@ -80,19 +83,23 @@ function startgame()
 		end
 	end
 	function love.draw()
+	
 	  --love.graphics.setColor( 0, 0, 0, 255)
 	  --love.graphics.rectangle("fill", 0, 0, 1025, 600)
 	  love.graphics.setColor( 255, 255, 255, 255)
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
 	  love.graphics.print("EGO", 1025/2,0)
+	  
 	  love.graphics.setColor( 75, 75, 75, 255)
 	  love.graphics.rectangle("fill", 0, 35, 1025, 565)
+	  
 	  love.graphics.setColor( 125, 125, 125, 255)
 	  love.graphics.rectangle("fill", 120, 100, 800, 400)
 	  
 	  spawnCrowd(bodies)
 	  
 	  love.graphics.draw(player, px, py, playerrot, .33, .33, 32, 32)
+	  love.graphics.print( "Mouse X: ".. love.mouse.getX() .. " Mouse Y: " .. love.mouse.getY(), 600, 0)
 
 	  
 	  

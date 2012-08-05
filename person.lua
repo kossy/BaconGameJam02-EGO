@@ -2,6 +2,29 @@ require "middleclass/middleclass"
 
 hasSpawned = false
 crowd = {}
+
+
+	
+world = {}
+world.smallx = 119
+world.smally = 100
+world.largex = 919
+world.largey = 512
+
+world = love.physics.newWorld(world.smallx , world.smally, world.largex, world.largey, true)
+
+objects = {}
+objects.person.body = love.physics.newBody( world, person.x , person.y, "dynamic" )
+objects.person.shape = love.physics.newCircleShape( 24)
+objects.person.fixture = love.physics.newFixture(bodys.person.body, bodys.person.shape)
+
+--bodys.player.body = love.physics.newBody( world, self.x , self.y, "dynamic" )
+--bodys.player.shape = love.physics.newCircleShape( 24)
+--bodys.player.fixture = love.physics.newFixture(bodys.player.body, bodys.player.shape)
+
+
+
+
 person = love.graphics.newImage("media/person.png")
 Person = class('Person') --this is the same as class('Person', Object) or Object:subclass('Person')
 function Person:initialize(x, y)
@@ -10,6 +33,9 @@ function Person:initialize(x, y)
 	self.tick = 0
 	self.dir = 0
 	self.speed = 50
+
+
+
 end
 function Person:draw()
 	love.graphics.draw(person, self.x, self.y, 0, .33)
