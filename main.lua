@@ -90,7 +90,7 @@ function love.draw()
 		if key == "t" then
 			mode = "Settings"
 			print ("GAME: Mode Changed to Settings")
-
+			end
 		elseif key == "-" then
 			volume = love.audio.getVolume()
 			love.audio.setVolume(volume - 0.1)
