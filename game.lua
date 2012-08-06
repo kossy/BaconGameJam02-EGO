@@ -42,13 +42,24 @@ function startgame()
 	pfix = love.physics.newFixture(pbody, pshape, 3)
 	
 	cameraman = love.graphics.newImage("media/cameraman.png")
+	funnel = love.graphics.newImage("media/cam_funnel.png")
 	cx = 1025/2
 	cy = 600/2
 	cspeed = 200
 	camrot = 0
 	cbody = love.physics.newBody( world, cx , cy, "dynamic" )
 	cshape = love.physics.newCircleShape(12)
-	cfix = love.physics.newFixture(pbody, pshape, 3)
+	cfix = love.physics.newFixture(cbody, cshape, 3)
+	
+	camx = cbody:getX()
+	camy = cbody:getY()
+	
+	funnelrot = -3.1
+	
+	tbody = love.physics.newBody( world, cx , cy, "dynamic" )
+	--tshape = love.physics.newRectangleShape( camx, camy, 10, 10, funnelrot )
+	tshape =  love.physics.newPolygonShape(camx, camy + 24, camx - 10, camy + 48, camx + 10, camx + 48)
+	tfix = love.physics.newFixture(tbody, tshape, 3)
 	
 	ymax = 490
 	ymin = 100
@@ -65,6 +76,25 @@ function startgame()
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()
 	
+	pings = {} --Hods Fired Pings so they can be easily managed
+           
+        function ping()
+			ping = {}
+            camx = cbody:getX()
+            camy = cbody:getY()
+            ping.x = camx + (40/2)     -- Where the ping fire from x
+            ping.y = camy       -- Where the ping fire from y
+            table.insert(pings, ping)
+            print("Ping Loaded")
+        end
+                   
+        function love.keyreleased(key)
+            if (key == " ") then
+				--ping()
+				print("Ping")
+            end
+        end
+
 	
 	function love.update(dt)
 		world:update(dt)
@@ -105,7 +135,17 @@ function startgame()
 				playerrot =(3.14159265)
 				--pbody:setLinearVelocity( 0, 0 )
 				pbody:applyForce( 0, pspeed)
-		   end
+				
+			
+		   end	   			
+					
+			if love.keyboard.isDown("k") then
+				funnelrot = funnelrot + 0.1
+			end
+			
+		    if love.keyboard.isDown("l") then
+				funnelrot = funnelrot - 0.1
+			end
 		end
 	end
 	function love.draw()
@@ -139,7 +179,11 @@ function startgame()
 	  love.graphics.setColor( 0, 0, 255, 255)
 	  love.graphics.circle("fill", cbody:getX(), cbody:getY(), cshape:getRadius())
 	  love.graphics.reset()
+	  
 	  love.graphics.draw(cameraman, cbody:getX(), cbody:getY(), camrot, 1, 1, 10, 8)
+	  love.graphics.polygon('fill', 100, 100, 200, 100, 150, 200)
+	  love.graphics.draw(funnel, cbody:getX() + 4, cbody:getY() - 12, funnelrot, 1, 1, 10, 8)
+	  print(funnelrot)
 	  
 	  love.graphics.draw(scanlines, 0, 0)
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
