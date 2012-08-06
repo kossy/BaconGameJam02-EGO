@@ -17,7 +17,7 @@ function love.load()
 	love.audio.setVolume(1)
 	down = love.mouse.isDown("l")
 	print ("LOAD: Fonts and Reseting Variables ...Done")
-	music("2")
+	--music("2")
 
 end 
 
@@ -42,10 +42,13 @@ function love.draw()
 		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
 	end
 	if  mode == "Start"  then
+	
 		love.graphics.rectangle("fill", 316, 70, 371, 435) 
 		love.graphics.setColor(0, 0, 0)
 		love.graphics.rectangle("fill", 321, 75, 361, 425) 
 		love.graphics.setColor(1, 255, 0)
+			
+		
 		love.graphics.setFont(font70)
 		love.graphics.print("EGO", 400, 100)
 		love.graphics.setFont(font20)
@@ -203,6 +206,12 @@ function love.draw()
 		love.graphics.setFont(font30)
 		love.graphics.print("Help", 800, 5)
 		love.graphics.setFont(font20)
+		love.graphics.print("a", 43, 150)
+		love.graphics.print("s", 94, 150)
+		love.graphics.print("d", 143, 150)
+		love.graphics.draw("w", 94, 115)
+		love.graphics.setFont(font14)
+		love.graphics.print("Use w,a,s,d to control Max up , left , down and right", 201, 115)
 		back()
 	end
 	

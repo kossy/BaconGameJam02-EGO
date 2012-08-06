@@ -33,6 +33,7 @@ function startgame()
 	border.right.fixture = love.physics.newFixture(border.right.body, border.right.shape, 10) -- A higher density gives it more mass.
 
 	player = love.graphics.newImage("media/personsmall.png")
+	camman = love.graphics.newImage("media/camman.png")
 	px = 1025/2
 	py = 600/2
 	pspeed = 200
@@ -51,7 +52,7 @@ function startgame()
 	spxmax = 870
 	spxmin = 150
 	
-	bodies = 500
+	bodies = 100      --max around 1448
 	
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()
@@ -131,7 +132,8 @@ function startgame()
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
 	  love.graphics.print("EGO", 1025/2,0)
 	  love.graphics.print( "Mouse X: ".. love.mouse.getX() .. " Mouse Y: " .. love.mouse.getY(), 600, 0)
-
+	
+	
 	  
 	end
 

@@ -10,7 +10,12 @@ function back()
 	if love.mouse.isDown("l") and mouse_x >= 8 and mouse_x <= 90 and mouse_y >= 19 and mouse_y  <= 46 then
 		mode = "Start"
 	end
-	
+	function love.keypressed(key)
+		if key == "backspace" then
+			mode = "Start"
+			print ("GAME: Mode Reset to Start")
+		end
+	end
 	print ("GAME: Mode Reset to Start")
 	
 end 
