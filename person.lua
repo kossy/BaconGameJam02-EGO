@@ -20,19 +20,6 @@ person3 = love.graphics.newImage("media/person3.png")
 person4 = love.graphics.newImage("media/person4.png")
 person5 = love.graphics.newImage("media/person5.png")
 
-
-Person = class('Person') --this is the same as class('Person', Object) or Object:subclass('Person')
-function Person:initialize(x, y)
-	self.x = x
-	self.y = y
-	self.tick = 0
-	self.dir = 0
-	self.speed = 50
-end
-function Person:draw()
-	love.graphics.draw(person, self.x, self.y, 0, .33)
-end
-
 function draw(num)
 	if hasSpawned == false then
 		for i=0, num do
@@ -43,6 +30,8 @@ function draw(num)
 			fixture[i] = love.physics.newFixture(body[i], crowd[i])
 			tick[i] = 0
 			dir[i] = 0
+			forcex[i] = 0
+			forcey[i] = 0
 			skin[i] = math.random(1,5)
 			print(skin[i])
 			rot[i] = 0

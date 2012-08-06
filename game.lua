@@ -1,5 +1,6 @@
 require "person"
 require "middleclass/middleclass"
+require "cam"
 
 function startgame()
 	
@@ -41,25 +42,7 @@ function startgame()
 	pshape = love.physics.newCircleShape(12)
 	pfix = love.physics.newFixture(pbody, pshape, 3)
 	
-	cameraman = love.graphics.newImage("media/cameraman.png")
-	funnel = love.graphics.newImage("media/cam_funnel.png")
-	cx = 1025/2
-	cy = 600/2
-	cspeed = 200
-	camrot = 0
-	cbody = love.physics.newBody( world, cx , cy, "dynamic" )
-	cshape = love.physics.newCircleShape(12)
-	cfix = love.physics.newFixture(cbody, cshape, 3)
 	
-	camx = cbody:getX()
-	camy = cbody:getY()
-	
-	funnelrot = -3.1
-	
-	tbody = love.physics.newBody( world, cx , cy, "dynamic" )
-	--tshape = love.physics.newRectangleShape( camx, camy, 10, 10, funnelrot )
-	tshape =  love.physics.newPolygonShape(camx, camy + 24, camx - 10, camy + 48, camx + 10, camx + 48)
-	tfix = love.physics.newFixture(tbody, tshape, 3)
 	
 	ymax = 490
 	ymin = 100
@@ -72,6 +55,7 @@ function startgame()
 	spxmin = 150
 	
 	bodies = 500
+	cams = 4
 	
 	mouse_x = love.mouse.getX()
 	mouse_y = love.mouse.getY()
@@ -168,6 +152,7 @@ function startgame()
 	  	 
 	  love.graphics.reset()
 	  draw(bodies)
+	  drawCams(cams)
 	  
 	  love.graphics.setColor( 0, 255, 0, 255)
 	  --pbody:setX(px)
@@ -176,14 +161,10 @@ function startgame()
 	  love.graphics.reset()
 	  love.graphics.draw(player, pbody:getX(), pbody:getY(), playerrot, 1, 1, 8, 8)
 	  
-	  love.graphics.setColor( 0, 0, 255, 255)
-	  love.graphics.circle("fill", cbody:getX(), cbody:getY(), cshape:getRadius())
-	  love.graphics.reset()
+	  --love.graphics.setColor( 0, 0, 255, 255)
+	  --love.graphics.circle("fill", cbody:getX(), cbody:getY(), cshape:getRadius())
+	  --love.graphics.reset()
 	  
-	  love.graphics.draw(cameraman, cbody:getX(), cbody:getY(), camrot, 1, 1, 10, 8)
-	  love.graphics.polygon('fill', 100, 100, 200, 100, 150, 200)
-	  love.graphics.draw(funnel, cbody:getX() + 4, cbody:getY() - 12, funnelrot, 1, 1, 10, 8)
-	  print(funnelrot)
 	  
 	  love.graphics.draw(scanlines, 0, 0)
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
@@ -192,5 +173,5 @@ function startgame()
 
 	  
 	end
-
+	
 end
