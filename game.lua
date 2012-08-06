@@ -32,7 +32,7 @@ function startgame()
 	border.right.shape = love.physics.newRectangleShape(10, 410)
 	border.right.fixture = love.physics.newFixture(border.right.body, border.right.shape, 10) -- A higher density gives it more mass.
 
-	player = love.graphics.newImage("media/personsmall.png")
+	player = love.graphics.newImage("media/player.png")
 	px = 1025/2
 	py = 600/2
 	pspeed = 200
@@ -40,6 +40,15 @@ function startgame()
 	pbody = love.physics.newBody( world, px , py, "dynamic" )
 	pshape = love.physics.newCircleShape(12)
 	pfix = love.physics.newFixture(pbody, pshape, 3)
+	
+	cameraman = love.graphics.newImage("media/cameraman.png")
+	cx = 1025/2
+	cy = 600/2
+	cspeed = 200
+	camrot = 0
+	cbody = love.physics.newBody( world, cx , cy, "dynamic" )
+	cshape = love.physics.newCircleShape(12)
+	cfix = love.physics.newFixture(pbody, pshape, 3)
 	
 	ymax = 490
 	ymin = 100
@@ -126,6 +135,11 @@ function startgame()
 	  love.graphics.circle("fill", pbody:getX(), pbody:getY(), pshape:getRadius())
 	  love.graphics.reset()
 	  love.graphics.draw(player, pbody:getX(), pbody:getY(), playerrot, 1, 1, 8, 8)
+	  
+	  love.graphics.setColor( 0, 0, 255, 255)
+	  love.graphics.circle("fill", cbody:getX(), cbody:getY(), cshape:getRadius())
+	  love.graphics.reset()
+	  love.graphics.draw(cameraman, cbody:getX(), cbody:getY(), camrot, 1, 1, 10, 8)
 	  
 	  love.graphics.draw(scanlines, 0, 0)
 	  love.graphics.print("FPS: "..love.timer.getFPS(), 5, 0)
