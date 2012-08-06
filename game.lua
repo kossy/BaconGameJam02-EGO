@@ -21,6 +21,7 @@ function startgame()
 		
 		camman = love.graphics.newImage("media/camman.png")
 		player = love.graphics.newImage("media/player.png")
+		ping = love.graphics.newImage("media/bullet.png")
 		px = 1025/2
 		py = 600/2
 		pspeed = 100
@@ -75,7 +76,7 @@ function startgame()
 			  if cam.x < xmin then
 			  else
 				camrot =(-1.57079633)
-				cam.x = cam.px - (cam.speed *dt)
+				cam.x = cam.x - (cam.speed *dt)
 			  end
 			  
 		   elseif love.keyboard.isDown("right") then
@@ -211,7 +212,7 @@ end
 		love.graphics.setColor(255,255,255,255)
 
 		for i,v in ipairs(cam.shots) do -- Draws Pings 
-			love.graphics.rectangle("fill", v.x, v.y, 2, 5)
+			love.graphics.draw(ping, v.x, v.y, camrot, .33, .33, 2, 5)
 		end
 		    
 		love.graphics.setColor(0,255,255,255)

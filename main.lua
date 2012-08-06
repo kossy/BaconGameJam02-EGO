@@ -6,8 +6,6 @@ function love.load()
 	font20 = love.graphics.newFont("media/Fipps.otf", 20)
 	font30 = love.graphics.newFont("media/Fipps.otf", 30)
 	font70 = love.graphics.newFont("media/Fipps.otf", 70)
-	Buttion = love.graphics.newImage("media/Buttion.png")
-	Key = love.graphics.newImage("media/Key.png")
 	mode = "Start"
 	savetime = 0 -- Current OS time
 	showtext = true -- Show text or hide
