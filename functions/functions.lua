@@ -8,11 +8,15 @@ function back()
 	love.graphics.print("Back",  10, 5)
 	
 	if love.mouse.isDown("l") and mouse_x >= 8 and mouse_x <= 90 and mouse_y >= 19 and mouse_y  <= 46 then
-		mode = "Start"
+		Menu_Start()
 	end
 	
-	print ("GAME: Mode Reset to Start")
-	
+	function love.keypressed(key)
+		if key == "backspace" then
+			mode = "Start"
+			print ("GAME: Mode Reset to Start")
+		end
+	end
 end 
 
 function music(track)
@@ -35,8 +39,10 @@ function save(slot)
 end
 
 function egg_console() 
---fontc14 = love.graphics.newFont("media/console.ttf", 14)
-love.graphics.clear( )
-love.graphics.setBackgroundColor( 0, 0, 0)
-love.graphics.setColor(1, 255, 0)
+	--fontc14 = love.graphics.newFont("media/console.ttf", 14)
+	love.graphics.clear( )
+	love.graphics.setBackgroundColor( 0, 0, 0)
+	love.graphics.setColor(1, 255, 0)
 end
+
+

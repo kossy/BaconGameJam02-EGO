@@ -13,6 +13,8 @@ function love.load()
 	font20 = love.graphics.newFont("media/Fipps.otf", 20)
 	font30 = love.graphics.newFont("media/Fipps.otf", 30)
 	font70 = love.graphics.newFont("media/Fipps.otf", 70)
+	fontnormal20 = love.graphics.newFont("media/PIXEARG.TTF", 20)
+	fontbold20 = love.graphics.newFont("media/PIXEAB.TTF", 20)
 	
 	-- Assigning Varibles to Media
 	Buttion = love.graphics.newImage("media/Buttion.png")
@@ -39,27 +41,20 @@ function love.draw()
 	
 	-- F3 Enables a dev view
 	downf3 = love.keyboard.isDown("f3")
-	downegg = love.keyboard.isDown("`")
 	if downf3 == true then
-		if downegg == true then
-			egg_console()
-			text = "on"
-		end
-		if text == "on" then
-			love.graphics.print("Microsoft Windows [Version 6.1.7600]", 15, 474)
-            love.graphics.print("Copyright <c> 2012 Microsoft Corporation. All rights reserved.", 15 , 510)
-            love.graphics.print("C:\Users\EGO", 15, 550)
-		end
 		mouse_x = love.mouse.getX()
 		mouse_y = love.mouse.getY()
+		
 		love.graphics.print( "Mouse X: ".. mouse_x .. " Mouse Y: " .. mouse_y, 130, 0)
 		love.graphics.print("FPS: "..love.timer.getFPS(), 460, 0)
 	end
 	
 		-- Setting Up Menu Graphics
 	if  mode == "Start"  then
+	
 		love.graphics.rectangle("fill", 316, 70, 371, 435) 
 		love.graphics.setColor(0, 0, 0)
+		
 		love.graphics.rectangle("fill", 321, 75, 361, 425) 
 		love.graphics.setColor(1, 255, 0)
 		
@@ -77,6 +72,8 @@ function love.draw()
 		love.graphics.setFont(font14)
 		Version()
 		love.graphics.draw(scanlines, 0, 0)
+		
+
 		
 	--  Flicker Timer
 	--	if savetime == 0 or savetime + 1 <= os.time() then
@@ -123,6 +120,13 @@ function love.draw()
 			love.event.push("quit")
 			print ("GAME: Quiting")	
 		end
+    end
+		function love.keypressed(key)
+			
+		if key == "h" then
+			Menu_Welcome()
+			print ("MODE: Mode is now Welcome")	
+		end
     end		
 	
 	-- Setting Mouse Coords Variable
@@ -165,13 +169,13 @@ function love.draw()
 		else
 			love.graphics.print("Mute Music", 43, 74)
 		end
-		love.graphics.print("Toggle Fullscreen , Press F", 43, 150)
+		love.graphics.print("Toggle Fullscreen", 43, 150)
 		love.graphics.print("Music Volume " ..love.audio.getVolume().. " Press + -", 43, 111)
 		love.graphics.setFont(font20)
 		love.graphics.print("Back",  10, 5)
 		
 		
-		--Setting Settings Mouse Click Boxes
+		
 		
 		mouse_down = love.mouse.isDown("l")
 		
@@ -179,6 +183,8 @@ function love.draw()
 			mode = "Start"
 			print ("GAME: Mode Reset to Start")
 		end
+		
+		--Setting Settings Mouse Click Boxes
 		
 		if mouse_down == true and mouse_x >= 42 and mouse_x <= 227 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "1" then
 				music_toggle = "0"
@@ -188,9 +194,16 @@ function love.draw()
 	
 		end
 		
-		if mouse_down == true and mouse_x >= 42 and mouse_x <= 282 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "0" then
+		if mouse_down == true and mouse_x >= 42 and mouse_x <= 227 and mouse_y >= 147 and mouse_y  <= 197 then
+				love.graphics.toggleFullscreen( )
+				print ("GAME: FullScreen Toggled")
+	
+		end
+		
+		if mouse_down == true and mouse_x >= 42 and mouse_x <= 338 and mouse_y >= 87 and mouse_y  <= 115 and music_toggle == "0" then
 				music_toggle = "1"
-				music("1")
+				love.audio.stop()
+				music("2")
 				mouse_down = NULL
 				print ("GAME: Music UN-Muted")	
 	
@@ -239,4 +252,26 @@ function love.draw()
 		love.graphics.setFont(font20)
 		back()
 	end
+
 end
+
+
+function Menu_Welcome()
+	love.graphics.clear( )
+	love.graphics.setFont(font30)
+	love.graphics.print("Welcome to", 361, 30)
+	love.graphics.setFont(font70)
+	love.graphics.print("EGO", 400, 100)
+	love.graphics.setFont(font20)
+	love.graphics.print("Story:", 17, 462)
+	love.graphics.print("Basic Controls:", 17, 281)
+	
+    love.graphics.rectangle("fill", 45, 351, 40, 40) 
+    love.graphics.setColor(1, 255, 0)
+	love.graphics.draw(scanlines, 0, 0)
+	love.graphics.setFont(fontbold20)
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.print("a", 55, 361)
+		
+	back()	
+	end
