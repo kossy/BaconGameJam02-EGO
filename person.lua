@@ -1,26 +1,15 @@
 require "middleclass/middleclass"
 
 hasSpawned = false
+
 crowd = {}
+body = {}
+fixture = {}
 
-
-	
-world = {}
-world.smallx = 119
-world.smally = 100
-world.largex = 919
-world.largey = 512
-
-world = love.physics.newWorld(world.smallx , world.smally, world.largex, world.largey, true)
-
-objects = {}
-objects.person.body = love.physics.newBody( world, person.x , person.y, "dynamic" )
-objects.person.shape = love.physics.newCircleShape( 24)
-objects.person.fixture = love.physics.newFixture(bodys.person.body, bodys.person.shape)
-
---bodys.player.body = love.physics.newBody( world, self.x , self.y, "dynamic" )
---bodys.player.shape = love.physics.newCircleShape( 24)
---bodys.player.fixture = love.physics.newFixture(bodys.player.body, bodys.player.shape)
+tick = {}
+dir = {}
+forcex = {}
+forcey = {}
 
 
 
@@ -33,115 +22,52 @@ function Person:initialize(x, y)
 	self.tick = 0
 	self.dir = 0
 	self.speed = 50
-
-
-
 end
 function Person:draw()
 	love.graphics.draw(person, self.x, self.y, 0, .33)
 end
 
-function spawnCrowd(num)
+function draw(num)
 	if hasSpawned == false then
 		for i=0, num do
 			randx = math.random(spxmin, spxmax)
 			randy = math.random(spymin, spymax)
-			crowd[i] = Person:new(randx,randy)
-			crowd[i]:draw()
+			crowd[i] = love.physics.newCircleShape(8)
+			body[i] = love.physics.newBody( world, randx , randy, "dynamic" )
+			fixture[i] = love.physics.newFixture(body[i], crowd[i])
+			tick[i] = 0
+			dir[i] = 0
+			love.graphics.circle("fill", body[i]:getX(), body[i]:getY(), crowd[i]:getRadius())
+			print("Spawned" .. i)
 		end
 		hasSpawned = true
 	else
 		dt = love.timer.getDelta( )
+
+		love.graphics.setColor(193, 47, 14)
 		for i=0, num do
-			x = crowd[i].x
-			y = crowd[i].y
-			if crowd[i].tick == 0 then
+			x = body[i]:getX()
+			y = body[i]:getY()
+			if tick[i] == 0 then
 				--Find a random direction
-				crowd[i].dir = math.random(0,16)
-				print(crowd[i].dir)
+				dir[i] = math.random(0,8)
 				--Find a random tick
-				crowd[i].tick = math.random(50,100)
+				tick[i] = math.random(50,100)
+				--Find a random speed
+				forcex[i] = math.random(-50,50)
+				--Find a random speed
+				forcey[i] = math.random(-50,50)
 			end
 			
-			--move in random direction
-			if crowd[i].dir == 0 then
-				--crowd[i].dir == "idle"
-				
-			elseif crowd[i].dir == 1 or crowd[i].dir == 16 then 
-				--crowd[i].dir == "up"
-				if y < ymin then
-				else
-					--playerrot = -0.785398163
-					y = y - (crowd[i].speed *dt)
-				end
-			elseif crowd[i].dir == 2 or crowd[i].dir == 15 then
-				--crowd[i].dir == "up-right"
-				if y < ymin or x > xmax then
-				else
-					--playerrot = 0.785398163
-					y = y - (crowd[i].speed *dt)
-					x = x + (crowd[i].speed *dt)
-				end
-			elseif crowd[i].dir == 3 or crowd[i].dir == 14 then
-				--crowd[i].dir == "right"
-				if x > xmax then
-				else
-					--playerrot = -0.785398163
-					x = x + (crowd[i].speed *dt)
-				end				
-			elseif crowd[i].dir == 4 or crowd[i].dir == 13 then 
-				--crowd[i].dir == "down-right"
-				if y <= ymax or x >= xmax then
-				else
-					--playerrot = -0.785398163
-					y = y + (crowd[i].speed *dt)
-					x = x + (crowd[i].speed *dt)
-				end
-			elseif crowd[i].dir == 5 or crowd[i].dir == 12 then
-				--crowd[i].dir == "down"
-				if y > ymax then
-				else
-					--playerrot = -0.785398163
-					y = y + (crowd[i].speed *dt)
-				end
-			elseif crowd[i].dir == 6 or crowd[i].dir == 11 then
-				--crowd[i].dir == "down-left"
-				if y > ymax or x < xmin then
-				else
-					--playerrot = -0.785398163
-					y = y + (crowd[i].speed *dt)
-					x = x - (crowd[i].speed *dt)
-				end
-			elseif crowd[i].dir == 7 or crowd[i].dir == 10 then
-				--crowd[i].dir == "left"
-				if x < xmin then
-				else
-					--playerrot = -0.785398163
-					x = x - (crowd[i].speed *dt)
-				end				
-			elseif crowd[i].dir == 8 or crowd[i].dir == 9 then
-				--crowd[i].dir == "up-left"
-				if y < ymin or x < xmin then
-				else
-					--playerrot = -0.785398163
-					y = y - (crowd[i].speed *dt)
-					x = x - (crowd[i].speed *dt)
-				end
-			end
-			
-			crowd[i].tick = crowd[i].tick - 1
-			crowd[i].x = x
-			crowd[i].y = y
-			crowd[i]:draw()
-		end
+			tick[i] = tick[i] - 1
+			body[i]:applyForce(forcex[i], forcey[i])
+			love.graphics.circle("fill", body[i]:getX(), body[i]:getY(), crowd[i]:getRadius())
+		end	
 	end
 end
 
---function updateCrowd(num)
-	--for i=0, num do
-		--crowd[i]:draw()
-	--end
---end
+			--bodys.player.body = love.physics.newBody( world, self.x , self.y, "dynamic" )
+			--bodys.player.shape = love.physics.newCircleShape( 24)
+			--bodys.player.fixture = love.physics.newFixture(bodys.player.body, bodys.player.shape)
 	
-		
-	
+
